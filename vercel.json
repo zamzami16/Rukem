@@ -23,5 +23,6 @@
       "src": "/(.*)",
       "dest": "rukem/wsgi.py"
     }
-  ]
+  ],
+  "rewrites": [{ "source": "/(.*)", "destination": "/wsgi.py" }]
 }
