@@ -1,0 +1,40 @@
+
+{% extends 'pembukuan/base.html' %}
+
+{% load humanize %}
+
+{% block title %}Pembukuan Kas{% endblock title %}Pembukuan Kas
+
+{% block content %}
+
+<div class="judul">
+    <h1>Arus Kas Rukun Kematian Dsn. Plosokursi Ds. Mangunan</h1>
+</div>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Tanggal</th>
+            <th scope="col">Jenis</th>
+            <th scope="col">Nominal</th>
+            <th scope="col">Saldo</th>
+            <th scope="col">Keterangan</th>
+        </tr>
+    </thead>
+    <tbody>        
+        {% for row in kas %}
+            <tr>
+                <th scope="row">{{ row.row_number }}</th>
+                <td>{{ row.tanggal|date:"SHORT_DATE_FORMAT" }}</td>
+                <td>{{ row.jenis_enum }}</td>
+                <td>Rp.{{ row.nominal|intcomma }}</td>
+                <td>Rp.{{ row.saldo|intcomma }}</td>
+                <td>{{ row.keterangan }}</td>
+            </tr>
+        {% endfor %}            
+    </tbody>
+</table>
+<h2>Saldo Sekarang {{ saldo.tanggal|date:"SHORT_DATE_FORMAT" }}: Rp.{{ saldo.saldo|intcomma }}</h2>
+
+{% endblock content %}
