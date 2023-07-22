@@ -33,6 +33,8 @@ ALLOWED_HOSTS = [
     ".herokuapp.com",
     "localhost",
     "127.0.0.1",
+    ".vercel.app",
+    ".now.sh",
 ]
 
 
@@ -93,7 +95,14 @@ if DEBUG:
     }
 else:
     DATABASES = {
-        "default": env.dj_db_url("DATABASE_URL"),
+        "default": {
+            "ENGINE": "django.db.backends.postgresql_psycopg2",
+            "NAME": env.str("DB_NAME"),
+            "USER": env.str("DB_USER"),
+            "PASSWORD": env.str("DB_PASSWORD"),
+            "HOST": env.str("DB_HOST"),
+            "PORT": env.int("DB_PORT"),
+        }
     }
 
 
@@ -131,10 +140,9 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
-STATIC_URL = "/static/"
-STATICFILES_DIRS = [BASE_DIR / "static"]
-STATIC_ROOT = BASE_DIR / "staticfiles"
-STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
+STATICFILES_DIRS = (Path.join(BASE_DIR, "static"),)
+STATIC_ROOT = Path.join(BASE_DIR, "staticfiles_build", "static")
+
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
